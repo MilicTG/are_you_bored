@@ -13,7 +13,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingNavBar(
       color: BoredColors.primaryColorLight,
-      index: 1,
       selectedIconColor: BoredColors.onPrimaryColorLight,
       unselectedIconColor: Colors.white.withOpacity(0.6),
       items: [
