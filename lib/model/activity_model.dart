@@ -3,8 +3,8 @@ import 'dart:convert';
 class ActivityModel {
   final String activity;
   final String type;
-  final String participants;
-  final double price;
+  final int participants;
+  final int price;
   final String link;
   final String key;
   final double accessibility;
@@ -21,8 +21,8 @@ class ActivityModel {
   ActivityModel copyWith({
     String? activity,
     String? type,
-    String? participants,
-    double? price,
+    int? participants,
+    int? price,
     String? link,
     String? key,
     double? accessibility,
@@ -50,22 +50,19 @@ class ActivityModel {
     };
   }
 
-  factory ActivityModel.fromMap(Map<String, dynamic> map) {
+  factory ActivityModel.fromJson(Map<String, dynamic> json) {
     return ActivityModel(
-      activity: map['activity'],
-      type: map['type'],
-      participants: map['participants'],
-      price: map['price'],
-      link: map['link'],
-      key: map['key'],
-      accessibility: map['accessibility'],
+      activity: json['activity'],
+      type: json['type'],
+      participants: json['participants'],
+      price: json['price'],
+      link: json['link'],
+      key: json['key'],
+      accessibility: json['accessibility'],
     );
   }
 
   String toJson() => json.encode(toMap());
-
-  factory ActivityModel.fromJson(String source) =>
-      ActivityModel.fromMap(json.decode(source));
 
   @override
   String toString() {
