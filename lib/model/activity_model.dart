@@ -3,11 +3,11 @@ import 'dart:convert';
 class ActivityModel {
   final String activity;
   final String type;
-  final int participants;
-  final int price;
+  final num participants;
+  final num price;
   final String link;
   final String key;
-  final double accessibility;
+  final num accessibility;
   ActivityModel({
     required this.activity,
     required this.type,
@@ -21,11 +21,11 @@ class ActivityModel {
   ActivityModel copyWith({
     String? activity,
     String? type,
-    int? participants,
-    int? price,
+    num? participants,
+    num? price,
     String? link,
     String? key,
-    double? accessibility,
+    num? accessibility,
   }) {
     return ActivityModel(
       activity: activity ?? this.activity,
