@@ -2,6 +2,7 @@ import 'package:are_you_bored/ui/screens/home_screen.dart';
 import 'package:are_you_bored/ui/theme/bored_theme.dart';
 import 'package:are_you_bored/ui/theme/config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,9 +26,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
       title: 'AreYouBored?',
-      home: const HomeScreen(),
+      home: const Scaffold(
+        body: SafeArea(
+          child: HomeScreen(),
+        ),
+      ),
       theme: BoredTheme.boredLightTheme,
       darkTheme: BoredTheme.boredDarkTheme,
       themeMode: boredTheme.currentTheme,
