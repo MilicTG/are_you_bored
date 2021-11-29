@@ -1,4 +1,4 @@
 class Constants {
-  static const BASE_LINK = "https://www.boredapi.com/api";
-  static const ACTIVITY_ROUTE = "/activity";
+  static const baseLink = "https://www.boredapi.com/api";
+  static const activityRoute = "/activity";
 }

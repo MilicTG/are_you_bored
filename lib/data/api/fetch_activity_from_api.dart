@@ -6,7 +6,7 @@ import 'dart:convert';
 
 Future<ActivityModel> getActivityFromApi() async {
   final response =
-      await http.get(Uri.parse(Constants.BASE_LINK + Constants.ACTIVITY_ROUTE));
+      await http.get(Uri.parse(Constants.baseLink + Constants.activityRoute));
 
   if (response.statusCode == 200) {
     return ActivityModel.fromJson(jsonDecode(response.body));

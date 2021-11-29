@@ -35,17 +35,38 @@ class _BoredScreenState extends State<BoredScreen> {
                 child: FutureBuilder<ActivityModel>(
                   future: _activityResponse,
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return BoredCard(
-                        boredIdea: snapshot.data!.activity,
-                        boredType: snapshot.data!.type,
-                        boredParticipnts: snapshot.data!.participants,
-                        boredPrice: snapshot.data!.price,
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const CircularProgressIndicator();
+
+                      case ConnectionState.none:
+                        return const CircularProgressIndicator();
+
+                      case ConnectionState.active:
+                        return const CircularProgressIndicator();
+
+                      case ConnectionState.done:
+                        return BoredCard(
+                          boredIdea: snapshot.data!.activity,
+                          boredType: snapshot.data!.type,
+                          boredParticipnts: snapshot.data!.participants,
+                          boredPrice: snapshot.data!.price.round(),
+                          onSwipe: _onSwipeCard,
+                        );
+                      default:
+                        if (snapshot.hasData) {
+                          return BoredCard(
+                            boredIdea: snapshot.data!.activity,
+                            boredType: snapshot.data!.type,
+                            boredParticipnts: snapshot.data!.participants,
+                            boredPrice: snapshot.data!.price.round(),
+                            onSwipe: _onSwipeCard,
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+                        return const CircularProgressIndicator();
                     }
-                    return const CircularProgressIndicator();
                   },
                 ),
               ),
@@ -57,11 +78,11 @@ class _BoredScreenState extends State<BoredScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: _onSwipeCard,
                   child: const Text("Dislike"),
                 ),
                 ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: _onSwipeCard,
                   child: const Text("Like"),
                 )
               ],
@@ -73,5 +94,11 @@ class _BoredScreenState extends State<BoredScreen> {
         ),
       ),
     );
+  }
+
+  void _onSwipeCard() {
+    setState(() {
+      _activityResponse = getActivityFromApi();
+    });
   }
 }
