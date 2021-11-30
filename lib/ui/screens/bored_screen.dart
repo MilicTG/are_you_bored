@@ -77,14 +77,26 @@ class _BoredScreenState extends State<BoredScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
+                FloatingActionButton(
                   onPressed: _onSwipeCard,
-                  child: const Text("Dislike"),
+                  foregroundColor: BoredColors.accentColorLight,
+                  elevation: 10.0,
+                  child: const Icon(
+                    Icons.thumb_down,
+                    color: BoredColors.onPrimaryColorDark,
+                    size: 28.0,
+                  ),
                 ),
-                ElevatedButton(
+                FloatingActionButton(
                   onPressed: _onSwipeCard,
-                  child: const Text("Like"),
-                )
+                  foregroundColor: BoredColors.accentColorLight,
+                  elevation: 10.0,
+                  child: const Icon(
+                    Icons.thumb_up,
+                    color: BoredColors.onPrimaryColorDark,
+                    size: 28.0,
+                  ),
+                ),
               ],
             ),
             const SizedBox(

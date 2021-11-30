@@ -1,4 +1,5 @@
 import 'package:are_you_bored/ui/screens/home_screen.dart';
+import 'package:are_you_bored/ui/theme/bored_colors.dart';
 import 'package:are_you_bored/ui/theme/bored_theme.dart';
 import 'package:are_you_bored/ui/theme/config.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: BoredColors.accentColorLight));
+
     return MaterialApp(
       title: 'AreYouBored?',
       home: const Scaffold(
