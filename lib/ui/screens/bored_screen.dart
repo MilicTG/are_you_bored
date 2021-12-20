@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:are_you_bored/data/api/fetch_activity_from_api.dart';
+import 'package:are_you_bored/data/local/open_database.dart';
 import 'package:are_you_bored/model/activity_model.dart';
+import 'package:are_you_bored/model/saved_idea.dart';
 import 'package:are_you_bored/ui/theme/bored_colors.dart';
 import 'package:are_you_bored/widgets/bored_card.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
 class BoredScreen extends StatefulWidget {
   const BoredScreen({Key? key}) : super(key: key);
@@ -51,7 +56,8 @@ class _BoredScreenState extends State<BoredScreen> {
                           boredType: snapshot.data!.type,
                           boredParticipnts: snapshot.data!.participants,
                           boredPrice: snapshot.data!.price.round(),
-                          onSwipe: _onSwipeCard,
+                          onSwipeLeft: _onSwipeCardLeft,
+                          onSwipeRight: _onSwipeCardRight,
                         );
                       default:
                         if (snapshot.hasData) {
@@ -60,7 +66,9 @@ class _BoredScreenState extends State<BoredScreen> {
                             boredType: snapshot.data!.type,
                             boredParticipnts: snapshot.data!.participants,
                             boredPrice: snapshot.data!.price.round(),
-                            onSwipe: _onSwipeCard,
+                            onSwipeLeft: _onSwipeCardLeft,
+                            onSwipeRight: () =>
+                                _onSwipeCardRight(snapshot.data!.activity),
                           );
                         } else if (snapshot.hasError) {
                           return Text('${snapshot.error}');
@@ -78,7 +86,7 @@ class _BoredScreenState extends State<BoredScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FloatingActionButton(
-                  onPressed: _onSwipeCard,
+                  onPressed: _onSwipeCardLeft,
                   foregroundColor: BoredColors.accentColorLight,
                   elevation: 10.0,
                   child: const Icon(
@@ -88,7 +96,7 @@ class _BoredScreenState extends State<BoredScreen> {
                   ),
                 ),
                 FloatingActionButton(
-                  onPressed: _onSwipeCard,
+                  onPressed: () => {},
                   foregroundColor: BoredColors.accentColorLight,
                   elevation: 10.0,
                   child: const Icon(
@@ -108,9 +116,38 @@ class _BoredScreenState extends State<BoredScreen> {
     );
   }
 
-  void _onSwipeCard() {
-    setState(() {
-      _activityResponse = getActivityFromApi();
-    });
+  void _onSwipeCardLeft() {
+    setState(
+      () {
+        _activityResponse = getActivityFromApi();
+      },
+    );
+  }
+
+  void _onSwipeCardRight(String ideaName) {
+    var rng = Random();
+
+    insertIdea(
+      SavedIdea(
+        id: rng.nextInt(100000),
+        ideaName: ideaName,
+      ),
+    );
+
+    setState(
+      () {
+        _activityResponse = getActivityFromApi();
+      },
+    );
+  }
+
+  Future<void> insertIdea(SavedIdea idea) async {
+    final db = await database;
+
+    await db.insert(
+      'ideas',
+      idea.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 }

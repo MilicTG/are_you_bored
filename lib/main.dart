@@ -1,3 +1,4 @@
+import 'package:are_you_bored/data/local/open_database.dart';
 import 'package:are_you_bored/ui/screens/home_screen.dart';
 import 'package:are_you_bored/ui/theme/bored_colors.dart';
 import 'package:are_you_bored/ui/theme/bored_theme.dart';
@@ -5,8 +6,9 @@ import 'package:are_you_bored/ui/theme/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+  getDatabase();
 }
 
 class MyApp extends StatefulWidget {

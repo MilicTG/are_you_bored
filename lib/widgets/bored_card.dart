@@ -8,26 +8,28 @@ class BoredCard extends StatelessWidget {
   final String boredType;
   final num boredParticipnts;
   final num boredPrice;
-  final Function onSwipe;
+  final Function onSwipeLeft;
+  final Function onSwipeRight;
 
-  const BoredCard({
-    Key? key,
-    required this.boredIdea,
-    required this.boredType,
-    required this.boredParticipnts,
-    required this.boredPrice,
-    required this.onSwipe,
-  }) : super(key: key);
+  const BoredCard(
+      {Key? key,
+      required this.boredIdea,
+      required this.boredType,
+      required this.boredParticipnts,
+      required this.boredPrice,
+      required this.onSwipeLeft,
+      required this.onSwipeRight})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Swipable(
       verticalSwipe: false,
       onSwipeLeft: (finalPosition) {
-        onSwipe();
+        onSwipeLeft();
       },
       onSwipeRight: (finalPosition) {
-        onSwipe();
+        onSwipeRight();
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
